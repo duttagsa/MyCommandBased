@@ -3,6 +3,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 import edu.wpi.first.wpilibj.Timer;
 
 public class DriveTrain extends SubsystemBase {
@@ -17,7 +23,7 @@ public class DriveTrain extends SubsystemBase {
         return instance;
     }
 
-    public DriveTrain(){ //device num
+    public DriveTrain(){ //device num - still need to get this
         leftFront = new TalonSRX(Constants.DT_LEFT_FRONT);
         leftBack = new TalonSRX(Constants.DT_LEFT_BACK);
         rightFront = new TalonSRX(Constants.DT_RIGHT_FRONT);
@@ -63,7 +69,9 @@ public class DriveTrain extends SubsystemBase {
     }
 
     @Override
-    public void periodic() { }
+    public void periodic() {
+
+     }
 
     @Override
     public void simulationPeriodic() 

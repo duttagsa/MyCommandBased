@@ -8,12 +8,12 @@ import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ArcadeDrive extends CommandBase {
+public class TankDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveTrain m_dt = DriveTrain.getInstance();
   private final XboxController m_control_vals;
 
-  public ArcadeDrive(XboxController dController) {
+  public TankDrive(XboxController dController) {
     m_control_vals = dController;
     addRequirements(m_dt);
   }
