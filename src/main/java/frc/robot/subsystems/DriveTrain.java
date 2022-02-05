@@ -62,24 +62,6 @@ public class DriveTrain extends SubsystemBase {
         SetPowers(leftPower, rightPower);
     }
 
-    // public void DriveMeters(double meters, double power)
-    // // Drive a certain number of meters based on time because we have a sucky robot.
-    // {
-    //     SetPowers(power, power);
-    //     Timer.delay(meters * (Constants.SECONDS_PER_METER * (1 / (power / 100))));
-    //     Stop();
-    // }    
-
-    // public void TurnDegress(double degrees, double power)
-    // // Turn a certain number of degrees based on the time, how fast the robot goes and the wheel to wheel distacne.
-    // {
-    //     double distance = 0.5 * ((2 * Math.PI * Constants.DriveTrain.WHEEL_TO_WHEEL_DISTANCE) * (degrees / 360));
-
-    //     SetPowers(power, -power);
-    //     Timer.delay(distance * (Constants.DriveTrain.SECONDS_PER_METER * (1 / (power / 100))));
-    //     Stop();
-    // }
-
     @Override
     public void periodic() { }
 
