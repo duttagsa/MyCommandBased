@@ -30,5 +30,8 @@ public final class Constants {
     //Shooter
     public static final int S_POW = 10;
 
+    // Stick Sensitivity
+    public static final double SENSITIVITY = 0.4;
+
 
 }

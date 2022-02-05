@@ -1,24 +1,30 @@
 package frc.robot.subsystems;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Timer;
 
 public class DriveTrain extends SubsystemBase {
-
     public static DriveTrain instance;
     public static TalonSRX leftFront, leftBack, rightFront, rightBack;
-    
-    public DriveTrain(){ //device num
-        leftFront = new TalonSRX(frc.robot.Constants.DT_LEFT_FRONT);
-        leftBack = new TalonSRX(frc.robot.Constants.DT_LEFT_BACK);
-        rightFront = new TalonSRX(frc.robot.Constants.DT_RIGHT_FRONT);
-        rightBack = new TalonSRX(frc.robot.Constants.DT_RIGHT_BACK);
+
+    public static DriveTrain getInstance(){ // check to see if drivetrain instance exists
+        if (instance == null){
+            instance = new DriveTrain();
         }
 
-    public static void setPow(double leftP, double rightP){ // set powers, drive function
+        return instance;
+    }
+
+    public DriveTrain(){ //device num
+        leftFront = new TalonSRX(Constants.DT_LEFT_FRONT);
+        leftBack = new TalonSRX(Constants.DT_LEFT_BACK);
+        rightFront = new TalonSRX(Constants.DT_RIGHT_FRONT);
+        rightBack = new TalonSRX(Constants.DT_RIGHT_BACK);
+    }
+
+    public static void SetPowers(double leftP, double rightP){ // set powers, drive function
         leftFront.set(ControlMode.PercentOutput, leftP);
         leftBack.set(ControlMode.PercentOutput, leftP);
         rightFront.set(ControlMode.PercentOutput, rightP);
@@ -26,45 +32,60 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public static void Stop(){ // stop
-        setPow(0, 0);
+         SetPowers(0, 0);
     }
 
     public static void Tank(double leftP, double rightP){ //tank drive
         if(Math.abs(leftP) > 0.02 || Math.abs(rightP) > 0.02){
-            setPow(leftP, rightP);
+            SetPowers(leftP, rightP);
         }
     }
 
-
     public void ArcadeDrive(double leftStickY, double rightStickX)
-    // Use     
+    // Use
     {
         double leftPower = leftStickY;
         double rightPower = leftStickY;
 
         if(rightStickX > 0)
         {
-            leftPower += Math.abs(rightStickX); // times stick sensitivity
+            leftPower += Math.pow(Math.abs(rightStickX), 2) * Constants.SENSITIVITY;
         }
         else
         {
-            rightPower += Math.abs(rightStickX);
+            rightPower += Math.pow(Math.abs(rightStickX), 2) * Constants.SENSITIVITY;
         }
-        
+
         rightPower -= leftPower % 100;
         leftPower -= rightPower % 100;
 
-        setPow(leftPower, rightPower);
+        SetPowers(leftPower, rightPower);
     }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    // !!!!!!!!! do you put anything in here?
-  }
+    // public void DriveMeters(double meters, double power)
+    // // Drive a certain number of meters based on time because we have a sucky robot.
+    // {
+    //     SetPowers(power, power);
+    //     Timer.delay(meters * (Constants.SECONDS_PER_METER * (1 / (power / 100))));
+    //     Stop();
+    // }    
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
+    // public void TurnDegress(double degrees, double power)
+    // // Turn a certain number of degrees based on the time, how fast the robot goes and the wheel to wheel distacne.
+    // {
+    //     double distance = 0.5 * ((2 * Math.PI * Constants.DriveTrain.WHEEL_TO_WHEEL_DISTANCE) * (degrees / 360));
+
+    //     SetPowers(power, -power);
+    //     Timer.delay(distance * (Constants.DriveTrain.SECONDS_PER_METER * (1 / (power / 100))));
+    //     Stop();
+    // }
+
+    @Override
+    public void periodic() { }
+
+    @Override
+    public void simulationPeriodic() 
+    { 
+        /* Simulations are for those who fear mechanical! Don't fear mechanical. */ 
+    }
 }
